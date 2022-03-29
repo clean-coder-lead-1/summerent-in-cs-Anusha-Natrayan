@@ -3,12 +3,12 @@ using Xunit;
 
 namespace TypewiseAlert.Test
 {
-  public class TypewiseAlertTest
-  {
-    [Fact]
-    public void InfersBreachAsPerLimits()
+    public class TypewiseAlertTest
     {
-      Assert.True(TypewiseAlert.InferBreach(12, 20, 30) ==TypewiseAlert.BreachType.TOO_LOW);
+        [Fact]
+        public static void InfersBreachAsPerLimits()
+        {
+            Assert.True(TypewiseAlert.InferBreach(12, 20, 30) == TypewiseAlert.BreachType.TooLow);
+        }
     }
-  }
 }
