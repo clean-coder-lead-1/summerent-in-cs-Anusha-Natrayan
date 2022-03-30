@@ -42,16 +42,14 @@ namespace TypewiseAlert
             {
                 return BreachType.TooLow;
             }
-            else if (value > upperLimit)
+            if (value > upperLimit)
             {
                 return BreachType.TooHigh;
             }
-            else
-            {
-                return BreachType.Normal;
-            }              
+
+            return BreachType.Normal;
         }
-       
+
         public static BreachType ClassifyTemperatureBreach(
             CoolingType coolingType, double temperatureInC)
         {
@@ -70,8 +68,8 @@ namespace TypewiseAlert
             }
             return InferBreach(temperatureInC, lowerLimit, upperLimit);
         }
-       
-        
+
+
         public static void CheckAndAlert(
             AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC)
         {
@@ -97,7 +95,7 @@ namespace TypewiseAlert
             Console.WriteLine("{0} : {1}\n", header, breachType);
         }
         public static void SendToEmail(BreachType breachType)
-        {          
+        {
             switch (breachType)
             {
                 case BreachType.TooLow:

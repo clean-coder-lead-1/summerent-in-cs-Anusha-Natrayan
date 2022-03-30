@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using static TypewiseAlert.TypewiseAlert;
 
@@ -13,9 +12,33 @@ namespace TypewiseAlert.Test
         }
 
         [Fact]
+        public static void InfersBreachHigh()
+        {
+            Assert.True(TypewiseAlert.InferBreach(40, 20, 30) == TypewiseAlert.BreachType.TooHigh);
+        }
+
+        [Fact]
+        public static void InfersBreachNormal()
+        {
+            Assert.True(TypewiseAlert.InferBreach(25, 20, 30) == TypewiseAlert.BreachType.Normal);
+        }
+
+        [Fact]
         public static void ClasifyTemperatureBreachAsPerLimits()
         {
             Assert.True(TypewiseAlert.ClassifyTemperatureBreach(CoolingType.PassiveCooling, 30.0) == TypewiseAlert.BreachType.Normal);
+        }
+
+        [Fact]
+        public static void ClasifyTemperatureBreachHighActiveCooling()
+        {
+            Assert.True(TypewiseAlert.ClassifyTemperatureBreach(CoolingType.HighActiveCooling, 50.0) == TypewiseAlert.BreachType.TooHigh);
+        }
+
+        [Fact]
+        public static void ClasifyTemperatureBreachMediumActiveCooling()
+        {
+            Assert.False(TypewiseAlert.ClassifyTemperatureBreach(CoolingType.MediumActiveCooling, -10.0) == TypewiseAlert.BreachType.Normal);
         }
 
         [Fact]
