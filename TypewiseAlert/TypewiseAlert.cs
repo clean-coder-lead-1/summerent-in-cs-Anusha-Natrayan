@@ -24,13 +24,6 @@ namespace TypewiseAlert
             MediumActiveCooling
         }
 
-        public enum UpperLimit
-        {
-            PassiveCooling = 35,
-            HighActiveCooling = 45,
-            MediumActiveCooling = 40
-        }
-
         public enum AlertTarget
         {
             ToController,
@@ -62,23 +55,22 @@ namespace TypewiseAlert
         {
             int upperLimit = 0;
 
-            if(coolingType == CoolingType.PassiveCooling)
-            {
-                upperLimit = 35;
-            }
-            else if(coolingType == CoolingType.HighActiveCooling)
-            {
-                upperLimit = 45;
-            }
-            else if(coolingType == CoolingType.MediumActiveCooling)
-            {
-                upperLimit = 40;
-            }
+            upperLimit = UpperLimitValue(coolingType);
            
             return InferBreach(temperatureInC, lowerLimit, upperLimit);
         }
-
-
+        public static int UpperLimitValue(CoolingType coolingType)
+        {
+            if (coolingType == CoolingType.PassiveCooling)
+            {
+                return 35;
+            }
+            if (coolingType == CoolingType.HighActiveCooling)
+            {
+                return 45;
+            }
+            return 40;
+        }
         public static void CheckAndAlert(
             AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC)
         {
