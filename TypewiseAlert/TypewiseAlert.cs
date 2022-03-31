@@ -24,6 +24,13 @@ namespace TypewiseAlert
             MediumActiveCooling
         }
 
+        public enum UpperLimit
+        {
+            PassiveCooling = 35,
+            HighActiveCooling = 45,
+            MediumActiveCooling = 40
+        }
+
         public enum AlertTarget
         {
             ToController,
@@ -54,18 +61,20 @@ namespace TypewiseAlert
             CoolingType coolingType, double temperatureInC)
         {
             int upperLimit = 0;
-            switch (coolingType)
+
+            if(coolingType == CoolingType.PassiveCooling)
             {
-                case CoolingType.PassiveCooling:
-                    upperLimit = 35;
-                    break;
-                case CoolingType.HighActiveCooling:
-                    upperLimit = 45;
-                    break;
-                case CoolingType.MediumActiveCooling:
-                    upperLimit = 40;
-                    break;
+                upperLimit = 35;
             }
+            else if(coolingType == CoolingType.HighActiveCooling)
+            {
+                upperLimit = 45;
+            }
+            else if(coolingType == CoolingType.MediumActiveCooling)
+            {
+                upperLimit = 40;
+            }
+           
             return InferBreach(temperatureInC, lowerLimit, upperLimit);
         }
 
@@ -78,16 +87,13 @@ namespace TypewiseAlert
               batteryChar.coolingType, temperatureInC
             );
 
-            switch (alertTarget)
+            if (alertTarget == AlertTarget.ToController)
             {
-                case AlertTarget.ToController:
-                    SendToController(breachType);
-                    break;
-                case AlertTarget.ToEmail:
-                    SendToEmail(breachType);
-                    break;
-                default:
-                    break;
+                SendToController(breachType);
+            }
+            if (alertTarget == AlertTarget.ToEmail)
+            {
+                SendToEmail(breachType);
             }
         }
         public static void SendToController(BreachType breachType)
@@ -96,20 +102,17 @@ namespace TypewiseAlert
         }
         public static void SendToEmail(BreachType breachType)
         {
-            switch (breachType)
+            
+            if (breachType == BreachType.TooLow)
             {
-                case BreachType.TooLow:
-                    Console.WriteLine("To: {0}\n", recepient);
-                    Console.WriteLine("Hi, the temperature is too low\n");
-                    break;
-                case BreachType.TooHigh:
-                    Console.WriteLine("To: {0}\n", recepient);
-                    Console.WriteLine("Hi, the temperature is too high\n");
-                    break;
-                case BreachType.Normal:
-                    break;
-                default:
-                    break;
+                Console.WriteLine("To: {0}\n", recepient);
+                Console.WriteLine("Hi, the temperature is too low\n");
+            }
+
+            if(breachType == BreachType.TooHigh)
+            {
+                Console.WriteLine("To: {0}\n", recepient);
+                Console.WriteLine("Hi, the temperature is too high\n");
             }
         }
     }
